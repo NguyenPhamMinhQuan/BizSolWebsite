@@ -10,7 +10,6 @@ const { contentPath } = Astro.props;
 
 // Get all Markdown file paths
 const markdownPaths = getMarkdownFiles(contentPath);
-console.log(markdownPaths);
 
 // Import all Markdown files statically
 const markdownModules = await Promise.all(
