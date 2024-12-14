@@ -3,6 +3,9 @@ import ContentSection from "../components/ContentSection.astro"
 import CTAButton from "../components/CTAButton.astro"
 import Hero from "../components/Hero.astro"
 import Layout from "../layouts/Layout.astro"
+import Statistics from "../components/Statistics.astro"
+import ImageMarquee from "../components/ImageMarquee.astro"
+import Gallery from "../components/Gallery.astro"
 ---
 
 <html lang="en">
@@ -13,13 +16,18 @@ import Layout from "../layouts/Layout.astro"
 		<meta name="generator" content={Astro.generator} />
 		<title>Business Solutions Club</title>
 	</head>
-	<Layout title="Home Page">
+	<Layout title="About Page">
 		<Hero slot = "heroSection", title = "MAKE YOUR CASE", subtitle="Leading Local, Going Global", preTitle="NTU Business Solutions Case Club", heroImage="/img/Hero1.jpg", size = "92vh", scrollTarget="#nextSection">
 			<CTAButton slot = "ctaButton" text="Learn More" targetLink="#nextSection"/>
 		</Hero>
 		<div id = nextSection>
 			<ContentSection contentPath = "/content/homePage" />
 		</div>
+		<Statistics statisticsPath="../content/Statistics/About.md"/>
+
+		<ImageMarquee/>
+
+
+		<!-- <Gallery galleryName="Co-Presidents & Secretary"/> -->
 	</Layout>
 </html>
-

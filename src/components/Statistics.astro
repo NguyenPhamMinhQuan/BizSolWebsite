@@ -1,0 +1,61 @@
+---
+// Props
+interface Props {
+  statisticsPath: string; // Path to Markdown file
+}
+
+const { statisticsPath } = Astro.props;
+
+// Import the statistics data from the Markdown file
+const statsModule = await import(`${statisticsPath}`);
+const stats = statsModule.frontmatter;
+---
+
+<section class="statistics-container">
+  {Object.entries(stats).map(([key, value]) => (
+    <div class="stat-item">
+      <div class="stat-number">{value}</div>
+      <div class="stat-key">{key.replace(/-/g, ' ')}</div>
+    </div>
+  ))}
+</section>
+
+<style>
+    .statistics-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin: 2rem 0;
+    padding: 0 5rem;
+    background-image: url(/StatsBackground.png);
+    background-size: cover; /* Ensure the image stretches to cover the entire container */
+    background-position: center; /* Keep the image centered */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    position: relative; /* To avoid layout issues with background stretching */
+    }
+
+
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 15ch;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #003366; /* Dark blue */
+  }
+
+  .stat-key {
+    font-size: 1.3rem;
+    font-weight: normal;
+    text-transform: capitalize;
+    margin-top: 0.5rem;
+    color: #555; /* Gray */
+  }
+</style>

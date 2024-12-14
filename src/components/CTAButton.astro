@@ -1,0 +1,52 @@
+---
+interface Props {
+    text: string;
+    targetLink: string
+}
+const { text, targetLink } = Astro.props;
+---
+
+<button class="cta-button">
+  <a href={targetLink} target="_blank">{text}</a>
+</button>
+
+<style>
+    .cta-button {
+        background-color: white; /* Primary color (default white background) */
+        color: black; /* Text color */
+        font-size: 1rem; /* Font size */
+        font-weight: bold;
+        padding: 0.75rem 1.5rem; /* Padding for a balanced size */
+        border: 2px solid transparent; /* Transparent border for default state */
+        border-radius: 0.5rem; /* Rounded corners */
+        cursor: pointer; /* Change cursor to pointer on hover */
+        transition: all 0.3s ease; /* Smooth transition for hover effects */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+        text-decoration: none; /* Remove underline from anchor */
+    }
+
+    .cta-button:hover {
+        background-color: #274BC7; /* Slightly lighter blue on hover */
+        color: white; /* Text color on hover */
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Increase shadow for hover effect */
+        transform: translateY(-3px); /* Slight lift on hover */
+    }
+
+    .cta-button:active {
+        background-color: #122469; /* Dark blue background when clicked */
+        color: white; /* White text when clicked */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduce shadow on click */
+        transform: translateY(2px); /* Subtle depress effect on click */
+        border: 2px solid #274BC7; /* Highlighted border when clicked */
+    }
+
+    .cta-button:focus {
+        outline: 3px solid #90B4E8; /* Light blue focus ring for accessibility */
+        outline-offset: 2px;
+    }
+
+    .cta-button a {
+        color: inherit; /* Inherit color from button */
+        text-decoration: none; /* Remove any default underline from the link */
+    }
+</style>

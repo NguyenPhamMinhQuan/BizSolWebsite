@@ -1,0 +1,62 @@
+---
+interface Props {
+    imageSrc: string;
+    altText: string;
+    title: string;
+    compiledContent: string;
+}
+
+const {imageSrc, altText, title, compiledContent} = Astro.props;
+---
+
+<article class="article-container">
+  <div class="image-wrapper">
+    <img src={imageSrc} alt={altText} class="article-image" />
+  </div>
+  <div class="content-wrapper">
+    <h3 class="article-title">{title}</h3>
+    <div class="article-content" set:html={compiledContent}></div>
+  </div>
+</article>
+
+<style>
+  .article-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .image-wrapper {
+    flex: 0 0 30vw; /*Image width and size adjustment - aspect ratio 100%*/
+  }
+
+  .article-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .content-wrapper {
+    flex: 1;
+  }
+
+  .article-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding-bottom: 0.3rem;
+    border: none;
+    border-bottom: 2px solid rgb(161, 142, 32);
+    margin: 0.5rem 0;
+    color: #333;
+    max-width: fit-content; /*Add more length than fit content*/
+  }
+
+  .gold-line {
+  }
+
+  .article-content {
+    font-size: 1rem;
+    line-height: 1.2;
+    color: #444;
+  }
+</style>

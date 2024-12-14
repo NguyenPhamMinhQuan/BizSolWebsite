@@ -1,0 +1,31 @@
+---
+import Header from "../components/Header.astro"
+import Layout from "../layouts/Layout.astro"
+import Hero from "../components/Hero.astro"
+import CTAButton from "../components/CTAButton.astro"
+import ContentSection from "../components/ContentSection.astro"
+
+const pageTitle = "About Me"
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Business Solutions Club</title>
+	</head>
+	<Layout title="About Page">
+		<Hero slot = "heroSection", title = "Join the Business Solutions Family", subtitle="", heroImage="/img/HeroRecruitment.jpg", size = "50vh", scrollTarget="#nextSection">
+			<!-- Add registration link form here -->
+			<CTAButton slot = "ctaButton" text="Join Us" targetLink="https://t.me/ntubusinesssolutions"/> 
+		</Hero>
+		<div id = nextSection>
+			<ContentSection contentPath = "/content/recruitmentPage" />
+		</div>
+
+
+		<!-- <Gallery galleryName="Co-Presidents & Secretary"/> -->
+	</Layout>
+</html>

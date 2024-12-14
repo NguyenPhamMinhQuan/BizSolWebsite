@@ -1,0 +1,88 @@
+<footer>
+    <div class="footer-column address">
+      <h4>Business Solutions</h4>
+      <p>Nanyang Technological University, Singapore</p>
+      <p>50 Nanyang Ave, Singapore 639798</p>
+      <h4>Contact Us</h4>
+      <p>
+        <a href="mailto:businesssolutions@gmail.com" class="email">Email Us</a>
+      </p>
+    </div>
+  
+    <div class="footer-column socials">
+      <h4>Follow Us</h4>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/company/ntubusinesssolutions/" target="_blank" aria-label="LinkedIn">
+          <img src="/icons/linkedin-icon.svg" alt="LinkedIn" class="social-icon" />
+        </a>
+        <a href="https://www.instagram.com/ntubusinesssolutions/" target="_blank" aria-label="Instagram">
+          <img src="/icons/instagram-icon.svg" alt="Instagram" class="social-icon" />
+        </a>
+        <a href="https://t.me/ntubusinesssolutions" target="_blank" aria-label="Telegram">
+          <img src="/icons/telegram-icon.svg" alt="Telegram" class="social-icon" />
+        </a>
+      </div>
+    </div>
+  </footer>
+  
+  <style>
+    footer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 2rem 10rem;
+      background-color: #003366; /* Dark blue background */
+      color: white; /* White text */
+      font-size: 1.1rem;
+    }
+  
+    .footer-column {
+      width: 45%; /* Two columns evenly spaced */
+    }
+  
+    .footer-column h4 {
+      margin-bottom: 1rem;
+    }
+  
+    .footer-column p {
+      margin: 0.5rem 0;
+    }
+  
+    a {
+      text-decoration: none;
+    }
+  
+    .email {
+      display: inline-block;
+      background-color: white; /* White background */
+      color: #003366; /* Dark blue text */
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    }
+  
+    .email:hover {
+      box-shadow: 0.2rem 0.2rem goldenrod; /*Add hover effect (box-shadow)*/
+    }
+  
+    .social-links {
+      display: flex;
+      gap: 1rem; /* Space between social icons */
+      margin-top: 0.5rem;
+    }
+  
+    .social-icon {
+      width: 32px; /* Enlarged size for visibility */
+      height: 32px;
+      filter: invert(1); /* Turns black SVGs to white */
+      transition: transform 0.2s ease-in-out;
+    }
+  
+    .social-icon:hover {
+      transform: scale(1.2); /* Slight enlargement on hover */
+    }
+  </style>
+  

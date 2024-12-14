@@ -1,0 +1,140 @@
+---
+const currentPage = Astro.url.pathname; // Retrieve the current page's path
+
+const navLinks = [
+  { 
+    text: '⌂', 
+    href: '/' 
+  },
+  { 
+    text: 'Members',
+    href: '/members'
+  },
+  { 
+    text: 'Achievements',
+    href: '/achievements' 
+  },
+  { 
+    text: 'Events',
+    subLinks: [
+      { href: '/abcc', text: 'ABCC' },
+      { href: '/sbcc', text: 'SBCC' },
+    ],
+  },
+  { 
+    text: 'Recruitment', 
+    href: '/recruitment' 
+  },
+];
+
+const isParentActive = (parentLink) => {
+  // Checks if any subLink matches the current page
+  if (parentLink.subLinks) {
+    return parentLink.subLinks.some(subLink => subLink.href === currentPage);
+  }
+  return false;
+};
+---
+<header class="full-width">
+  <img src="/logo.png" alt="LOGO" class="page_logo" />
+  <nav class="primary_nav">
+    {navLinks.map(link => (
+      <div class="nav_item">
+        <a 
+          href={link.href || '#'} 
+          class={`nav_link ${(currentPage === link.href || isParentActive(link)) ? 'current_page' : ''}`}
+        >
+          {link.text}
+        </a>
+        {link.subLinks && (
+          <div class="dropdown">
+            {link.subLinks.map(subLink => (
+              <a 
+                href={subLink.href} 
+                class={`dropdown_link ${currentPage === subLink.href ? 'current_page' : ''}`}
+              >
+                {subLink.text}
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    ))}
+  </nav>
+</header>
+
+<style>
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+
+  .page_logo {
+    width: 100px;
+    height: auto;
+  }
+
+  nav {
+    flex: 1;
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+  }
+
+  .nav_item {
+    position: relative;
+  }
+
+  .nav_link {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 15px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .nav_link:hover {
+    color: #007BFF;
+    background-color: #e0f0ff;
+    border-radius: 5px;
+  }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 10;
+  }
+
+  .dropdown_link {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    padding: 10px 20px;
+    white-space: nowrap;
+    transition: background-color 0.3s;
+  }
+
+  .dropdown_link:hover {
+    background-color: #e0f0ff;
+    color: #007BFF;
+  }
+
+  .nav_item:hover .dropdown {
+    display: block;
+  }
+
+  .current_page {
+    color: #fff;
+    background-color: #007BFF;
+    border-radius: 5px;
+  }
+</style>

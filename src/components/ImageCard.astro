@@ -1,0 +1,129 @@
+---
+interface Props {
+  imageSrc: string;
+  title: string;
+  description: string;
+}
+
+const { imageSrc, title, description } = Astro.props;
+
+// Generate a unique ID for the dialog
+const uniqueId = title.toLowerCase().replace(/\s+/g, '-') + '-popover';
+---
+<div class="image-card">
+  <!-- Image with overlay -->
+  <div class="image-container" onclick={`document.getElementById('${uniqueId}').showModal();`}>
+    <img src={imageSrc} alt={title} class="image-card__img" />
+    <div class="overlay">
+      <span class="overlay__title">{title}</span>
+    </div>
+  </div>
+
+  <!-- Popover dialog -->
+  <dialog id={uniqueId} class="image-card__popover" onclick={`event.target === this && this.close();`}>
+    <div class="popover__content-wrapper">
+      <img src={imageSrc} alt={title} class="popover__img" />
+      <div class="popover__content">
+        <h3 class="popover__title">{title}</h3>
+        <p class="popover__description" set:html={description}></p>
+      </div>
+    </div>
+  </dialog>
+</div>
+
+<style>
+/* General Styling */
+.image-card {
+  position: relative;
+  display: inline-block;
+  width: 200px; /* Adjust the size of the image card */
+  margin: 16px;
+  cursor: pointer;
+}
+
+.image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.image-card__img {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.image-card__img:hover {
+  transform: scale(1.05);
+}
+
+/* Gray Transparent Overlay */
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  color: white;
+  padding: 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.image-container:hover .overlay {
+  opacity: 1;
+}
+
+/* Dialog Popover Styling */
+.image-card__popover {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  padding: 16px;
+  max-width: 400px;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  height: max-content;
+  width: max-content;
+}
+
+dialog::backdrop{
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.popover__content-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
+}
+
+.popover__img {
+  width: 50%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.popover__content {
+  width: 50%;
+}
+
+.popover__title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.popover__description {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+</style>

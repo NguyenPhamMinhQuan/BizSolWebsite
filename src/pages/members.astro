@@ -1,0 +1,30 @@
+---
+import Layout from "../layouts/Layout.astro"
+import Hero from "../components/Hero.astro"
+import Gallery from "../components/Gallery.astro"
+import Header from "../components/Header.astro"
+import ImageCard from "../components/ImageCard.astro"
+const pageTitle = "Members"
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Business Solutions Club</title>
+	</head>
+	<Layout title={pageTitle}>
+		<Hero slot = "heroSection", title = "2024 Executive Committee", subtitle="Connect with us by clicking on our profiles", heroImage="/img/HeroMember.jpg", size = "60vh", scrollTarget="#nextSection"/>
+		<div id = nextSection>
+			<Gallery galleryName="Co-Presidents & Secretary" />
+			<Gallery galleryName="Training Department" />
+			<Gallery galleryName="Development Department" />
+			<Gallery galleryName="International Case Competition Department" />
+			<Gallery galleryName="Internal Events" />
+			<Gallery galleryName="Asian Business Case Competition" />
+			<Gallery galleryName="Singapore Business Case Competition" />
+		</div>
+	</Layout>
+</html>

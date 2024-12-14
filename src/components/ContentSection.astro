@@ -1,0 +1,94 @@
+---
+import Article from './Article.astro';
+import getMarkdownFiles from '../scripts/getMarkdownFiles.js';
+
+interface Props {
+  contentPath: string; // Path to the folder containing Markdown files
+}
+
+const { contentPath } = Astro.props;
+
+// Get all Markdown file paths
+const markdownPaths = getMarkdownFiles(contentPath);
+console.log(markdownPaths);
+
+// Import all Markdown files statically
+const markdownModules = await Promise.all(
+  markdownPaths.map(async (path) => {
+    const module = await import(`../../../${path}`);
+    return {
+      path,
+      frontmatter: module.frontmatter || {title:"Default Article", imageSrc: "", altText: "default Image"},
+      compiledContent: module.compiledContent || "Default Content",
+    };
+  })
+);
+
+// Separate Intro.md from other articles
+const introFile = markdownModules.find((file) => file.path.endsWith('Intro.md'));
+const articles = markdownModules.filter((file) => !file.path.endsWith('Intro.md'));
+
+// Get Intro content
+const introContent = introFile?.compiledContent || '';
+const introTitle = introFile?.frontmatter?.title || 'Default Title';
+---
+
+<section class="content-section">
+    <!-- Title and Intro Paragraph -->
+    <div class="section-header">
+      <h2 class="section-title">{introTitle}</h2>
+      {introContent && <p class="section-intro">{introContent}</p>}
+    </div>
+  
+    <!-- Articles -->
+    <div class="articles-container">
+      {articles.map((article) => (
+        <Article
+          imageSrc={article.frontmatter.imageSrc}
+          altText={article.frontmatter.altText}
+          title={article.frontmatter.title}
+          compiledContent= {article.compiledContent}
+        />
+      ))}
+    </div>
+  </section>
+  
+
+<style>
+  .content-section {
+    margin: 2rem auto;
+    max-width: 80vw;
+  }
+
+  .section-header {
+    text-align: justify;
+    margin-bottom: 2rem;
+    justify-items: center;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 1.5rem; /*Fix font size to fit to viewport size*/
+    font-weight: bold;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+    border: none;
+    border-bottom: 2px solid rgb(161, 142, 32);
+    margin: 0.5rem 0;
+    max-width: fit-content; /*Add more length than fit content*/
+  }
+
+  .section-intro {
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .articles-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+</style>

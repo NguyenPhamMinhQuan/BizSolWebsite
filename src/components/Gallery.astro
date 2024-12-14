@@ -1,0 +1,84 @@
+---
+import getMarkdownFiles from '../scripts/getMarkdownFiles';
+import ImageCard from './ImageCard.astro';
+
+interface Props {
+    galleryName: string; // The Name to the gallery folder
+}
+
+const {galleryName} = Astro.props;
+// Dynamically import all markdown Paths in the folder
+const markdownPaths = getMarkdownFiles(`content/galleries/${galleryName}`)
+//markdownPaths is an array of location strings for each markdown file
+// [
+//   'C:\\Users\\Quan\\Desktop\\BizSolWebsite/src/../src/content/galleries/Co-Presidents & Secretary/Ezann Leow.md',
+//   'C:\\Users\\Quan\\Desktop\\BizSolWebsite/src/../src/content/galleries/Co-Presidents & Secretary/Gerwyn Teo.md',
+//   'C:\\Users\\Quan\\Desktop\\BizSolWebsite/src/../src/content/galleries/Co-Presidents & Secretary/Khoo An Xian.md',
+//   'C:\\Users\\Quan\\Desktop\\BizSolWebsite/src/../src/content/galleries/Co-Presidents & Secretary/Shawn Lim.md'
+// ]
+
+// const galleryItems <-- is the markdown file item which have a frontmatter that contains the imageSrc and title as well as the content which is html element that can be used with compiled content and set:html to inject to the paragraph
+
+// Import all markdown files statically and prepare gallery items
+const galleryItems = await Promise.all(
+  markdownPaths.map(async (path) => {
+    const module = await import(`../../../${path}`);
+    return {
+      frontmatter: module.frontmatter || { title: "Default Title", imageSrc: "" },
+      compiledContent: module.compiledContent || "Default Content",
+    };
+  })
+);
+console.log(galleryItems);
+---
+
+  
+<section class="gallery">
+<h2 class="gallery__title">{galleryName}</h2>
+<div class="gallery__grid">
+    {galleryItems.map((item) => (
+    <ImageCard imageSrc={item.frontmatter.imageSrc} title={item.frontmatter.title} description={item.compiledContent} />
+    ))}
+</div>
+</section>
+  
+<style>
+/* Gallery Styling */
+.gallery {
+  padding: 20px;
+  text-align: center;
+}
+
+.gallery__title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: black;
+  display: flex; /* Allows alignment of pseudo-elements with text */
+  align-items: center; /* Aligns text with lines */
+  gap: 10px; /* Adds spacing between the text and the lines */
+  justify-content: center; /* Centers the title and the lines */
+  position: relative;
+}
+
+.gallery__title::before,
+.gallery__title::after {
+  content: '';
+  flex-grow: 1; /* Makes the lines flexible to extend */
+  height: 2px;
+  background-color: goldenrod;
+}
+
+.gallery__title::before {
+  margin-right: 10px; /* Space between the left line and the text */
+}
+
+.gallery__title::after {
+  margin-left: 10px; /* Space between the right line and the text */
+}
+.gallery__grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+gap: 20px;
+}
+</style>
+  
