@@ -9,4 +9,4 @@
 - Add a mobile header/navigation bar and footer
 - Fix **html injection** from markdowns content files with set:html (?)
 - **Add design and create the events pages for ABCC and SBCC**
-
+- Configure the repo to deploy on github Pages 
